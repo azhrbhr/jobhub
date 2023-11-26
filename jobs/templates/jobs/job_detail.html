@@ -1,0 +1,42 @@
+{% extends "no_sidebar_base.html" %}
+{% load humanize %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        {% if job.company.logo %}
+        <img src="{{ job.company.logo.url }}" class="img-fluid mb-3" alt="{{ job.company.name }} Logo"
+            style="max-width: 100px;">
+        {% endif %}
+        <h2 class="card-title">{{ job.title }}</h2>
+        <h5 class="card-subtitle mb-2 text-muted">{{ job.company.name }}</h5>
+        <p class="card-text text-muted small">
+            {{ job.location }} • {{ job.posted_at|naturaltime }}
+        </p>
+        <hr>
+
+        <h4 class="mb-3">Job Description</h4>
+        <p>{{ job.description }}</p>
+
+        <h4 class="mb-3">Requirements</h4>
+        <ul>
+            {% for requirement in job.requirements.all %}
+            <li>{{ requirement }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4 class="mb-3">How to Apply</h4>
+        <p>{{ job.how_to_apply }}</p>
+
+        <div class="mt-4">
+            <a href="{% url 'job_list' %}" class="btn btn-outline-primary">Back to Job List</a>
+            <a href="{% url 'apply_job' pk=job.id %}" class="btn btn-primary ms-2">Apply Now</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+<!-- You can add content to the sidebar if needed -->
+{% endblock %}

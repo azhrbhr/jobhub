@@ -1,0 +1,54 @@
+{% extends 'no_sidebar_base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header text-white text-center"
+                style="background: linear-gradient(45deg, #3498db, #8e44ad);">
+                <img src="https://picsum.photos/200/200?random=1" alt="Avatar" class="img-fluid rounded-circle mb-3"
+                    style="width: 80px;">
+                <h2 class="h4">{{ profile.user.get_full_name|default:profile.user.username }}</h2>
+                <a class="btn btn-light btn-sm" href="{% url 'profile_edit' %}">Edit Profile</a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>Full Name:</strong>
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Email:</strong>
+                        {{ profile.user.email }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Bio:</strong>
+                        {{ profile.bio }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Skills:</strong>
+                        {{ profile.skills }}
+                    </li>
+                    {% if profile.resume %}
+                    <li class="list-group-item">
+                        <strong>Resume:</strong>
+                        <a href="{{ profile.resume.url }}" target="_blank" class="text-decoration-none">
+                            View Resume
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item">
+                        <strong>Phone Number:</strong>
+                        {{ profile.phone_number }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Address:</strong>
+                        {{ profile.address }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

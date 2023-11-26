@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<h1 class="mt-4">Dashboard</h1>
+{% endblock %}
+
+{% block sidebar %}
+<!-- Dashboard Navigation Links -->
+<div class="bg-light shadow-sm rounded p-2">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link text-dark active" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'company_list' %}">Companies</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2>Job Applications for {{ job.title }}</h2>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Applicant</th>
+                <th scope="col">Cover Letter</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.applicant.get_full_name|default:application.applicant.username }}</td>
+                <td>{{ application.cover_letter|truncatechars:60 }}</td>
+                <td>{{ application.status }}</td>
+                <td>
+                    {% if application.status == 'Pending' %}
+                    <a href="{% url 'change_status' job.id application.id %}" class="btn btn-sm btn-info">Change Status
+                        to Accepted</a>
+                    {% elif application.status == 'Accepted' %}
+                    <a href="{% url 'change_status' job.id application.id %}" class="btn btn-sm btn-info">Change Status
+                        to Rejected</a>
+                    {% endif %}
+
+
+                    {% if not application.mark_as_viewed %}
+                    <a href="{% url 'mark_as_viewed' job.id application.id %}" class="btn btn-sm btn-success">Mark as
+                        Viewed</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

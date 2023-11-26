@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<h1 class="mt-4">Dashboard</h1>
+{% endblock %}
+
+{% block sidebar %}
+<!-- Dashboard Navigation Links -->
+<div class="bg-light shadow-sm rounded p-3">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'company_list' %}">Companies</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<h2>Companies</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for company in companies %}
+                    <tr>
+                        <td>
+                            <img src="{{ company.logo.url }}" class="img-fluid me-3" alt="{{ job.company.name }} Logo"
+                                style="max-width: 40px;">
+                        </td>
+                        <td>{{ company.name }}</td>
+                        <td>{{ company.description|truncatechars:60 }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-info">Edit</button>
+                            <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

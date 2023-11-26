@@ -1,0 +1,77 @@
+{% extends "no_sidebar_base.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="width: 460px;">
+    <div class="card-body">
+        <h1 class="display-6 mb-4">Update Profile</h1>
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            <ul class="list-unstyled">
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
+                <input type="text" value="{{ form.bio.value|default_if_none:'' }}"
+                    class="form-control {% if form.bio.errors %} is-invalid {% endif %}"
+                    id="{{ form.bio.id_for_label }}" name="{{ form.bio.name }}" placeholder="Bio">
+                {% if form.bio.errors %}
+                <div class="invalid-feedback">{{ form.bio.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.skills.id_for_label }}" class="form-label">Skills</label>
+                <input type="text" value="{{ form.skills.value|default_if_none:'' }}"
+                    class="form-control {% if form.skills.errors %} is-invalid {% endif %}"
+                    id="{{ form.skills.id_for_label }}" name="{{ form.skills.name }}" placeholder="Skills">
+                {% if form.skills.errors %}
+                <div class="invalid-feedback">{{ form.skills.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.resume.id_for_label }}" class="form-label">Resume</label>
+                <input type="file" class="form-control {% if form.resume.errors %} is-invalid {% endif %}"
+                    id="{{ form.resume.id_for_label }}" name="{{ form.resume.name }}">
+                {% if form.resume.errors %}
+                <div class="invalid-feedback">{{ form.resume.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                <input type="text" value="{{ form.phone_number.value|default_if_none:'' }}"
+                    class="form-control {% if form.phone_number.errors %} is-invalid {% endif %}"
+                    id="{{ form.phone_number.id_for_label }}" name="{{ form.phone_number.name }}"
+                    placeholder="Phone Number">
+                {% if form.phone_number.errors %}
+                <div class="invalid-feedback">{{ form.phone_number.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                <textarea class="form-control {% if form.address.errors %} is-invalid {% endif %}"
+                    id="{{ form.address.id_for_label }}" name="{{ form.address.name }}" rows="3"
+                    placeholder="Address">{{ form.address.value|default_if_none:'' }}</textarea>
+                {% if form.address.errors %}
+                <div class="invalid-feedback">{{ form.address.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="hstack gap-4">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
